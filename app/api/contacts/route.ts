@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { db } from '@/db/drizzle';
 import { contacts } from "@/db/schema";
 
+//create contact
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -32,8 +33,9 @@ export async function POST(req: Request) {
   }
 }
 
+//get all contacts
 export async function GET() {
-  const data = await db.select().from(contacts).orderBy(contacts.id);
+  const data = await db.select().from(contacts).orderBy(contacts.id_contact);
 
   return NextResponse.json({ success: true, data });
 }
