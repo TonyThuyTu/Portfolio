@@ -1,0 +1,1 @@
+ALTER TABLE "projects" RENAME COLUMN "source" TO "varchar";
