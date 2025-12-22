@@ -39,7 +39,7 @@ export const projects = pgTable(
     id_project: serial("id_project").primaryKey(),
 
     name: varchar("name", { length: 255 }).notNull(),
-    slug: varchar("slug", { length: 255 }).notNull(),
+    slug: varchar("slug", { length: 255 }).notNull().unique(),
 
     img_cover: varchar("img_cover", { length: 500 }).notNull(),
 
@@ -65,9 +65,6 @@ export const projects = pgTable(
       .defaultNow()
       .notNull(),
 
-    updatedAt: timestamp("updated_at")
-      .defaultNow()
-      .notNull(),
   },
   (table) => ({
     slugIdx: index("projects_slug_idx").on(table.slug),
