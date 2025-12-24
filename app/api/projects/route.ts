@@ -3,7 +3,8 @@ import { db } from "@/db/drizzle";
 import { projects } from "@/db/schema";
 import { generateSlug } from "@/lib/slug.generate";
 import { uploadFile } from "@/lib/uploads";
-
+import { desc } from "drizzle-orm";
+//create project
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
@@ -101,3 +102,32 @@ export async function POST(req: Request) {
   }
 }
 
+//get all projects
+export async function GET() {
+  
+  try {
+
+    const listProjects = await db.select({
+      
+      id_project: projects.id_project,
+      name: projects.name,
+      img_cover: projects.img_cover,
+      short_desc: projects.short_desc,
+
+    }).from(projects).orderBy(desc(projects.id_project));
+
+    return NextResponse.json(listProjects, { status: 200 });
+
+  } catch (error) {
+
+    console.error('get projects error:', error);
+    return NextResponse.json(
+
+      { message: 'Server error' },
+      { status: 500 }
+
+    );
+
+  }
+
+} 
